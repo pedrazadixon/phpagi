@@ -203,12 +203,17 @@
                   $n = 3;
                   $c = count($msgarr_tmp) - 1;
                   $output = explode(': ', $msgarr_tmp[3]);
-                  if ($output[1]) {
+                  if (true) {
                       $data = $output[1];
                       while ($n++<$c) {
                           $output = explode(': ', $msgarr_tmp[$n]);
                           if ($output[1]) {
-                              $data .= "\n".$output[1];
+                            $output2 = '';
+                            for ($i=0; $i < count($output)-1; $i++) { 
+                              $output2 .= $output[$i+1] . ':';
+                              $lastout = $output[$i+1];
+                            }
+                            $data .= "\n".trim($output2, ':');
                           }
                       }
                       $parameters['data'] = $data;
@@ -226,6 +231,8 @@
         $val = trim($kv[1]);
         $parameters[$key] = $val;
       }
+
+      $parameters['Output'] = @$lastout;
 
       // process response
       switch($type)
